@@ -41,9 +41,6 @@ pipeline {
     stage('Vulnerability Scan - Docker ') {
       steps {
         timeout(time: 20, unit: 'MINUTES') {  // Aumenta el tiempo de espera a 20 minutos
-          //sh "docker run  -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity=critical 127.0.0.1:5000/mguazzardo/testapp" 
-          //sh "docker run  -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.55.1 image --severity=critical 127.0.0.1:5000/mguazzardo/testapp" 
-          //sh "docker run  -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.55.1 image --severity=UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL 127.0.0.1:5000/mguazzardo/testapp" 
           script {
                 def severity = ''
                 if (params.SEVERITY == 'ALL') {

@@ -1,0 +1,25 @@
+# Usar como base la imagen de mguazzardo/pipe-seg:latest
+FROM mguazzardo/pipe-seg:latest
+
+# Mantener la configuración de usuario de Jenkins
+USER root
+
+# Directorio de trabajo de Jenkins
+WORKDIR /var/jenkins_home
+
+# Copiar el contenido de ./data/jenkins en /var/jenkins_home
+COPY ./jenkins /var/jenkins_home
+
+# Cambiar permisos para asegurarse de que Jenkins pueda acceder
+#RUN chown -R jenkins:jenkins /var/jenkins_home
+
+# Exponer los puertos de Jenkins (8080 para la UI web y 50000 para agentes)
+EXPOSE 8080
+EXPOSE 50000
+
+# Configurar volumen para mantener la persistencia de datos
+VOLUME /var/jenkins_home
+
+# Definir el comando que se ejecutará cuando se lance el contenedor
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+

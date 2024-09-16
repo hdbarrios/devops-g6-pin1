@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: docker.io/mguazzardo/pipe-seg
+    container_name: jenkins-curso
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./data/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - pin1-network
+
+  registry:
+    image: registry:2
+    container_name: docker-registry
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data/registry:/var/lib/registry
+      - ./data/registry/config.yml:/etc/docker/registry/config.yml
+    networks:
+      - pin1-network
+
+  registry-ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: registry-ui
+    environment:
+      REGISTRY_TITLE: "Docker Registry"
+      REGISTRY_URL: http://localhost:5000
+    ports:
+      - "8089:80"
+    networks:
+      - pin1-network
+
+networks:
+  pin1-network:
+    driver: bridge
+
