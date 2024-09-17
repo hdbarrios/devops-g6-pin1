@@ -193,7 +193,7 @@ node:alpine3.19
 
 Luego abrir en el browser:
 
-Jenkins: <http://localhost:8090/view/Grupo%206/>
+Jenkins: <http://localhost:8088/view/Grupo%206/>
 
 Registry: <http://localhost:8089/>
 
